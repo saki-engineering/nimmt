@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.png';
 import './App.css';
 import HelloWorld from './components/HelloWorld';
+import CountBoard from './components/CountBoard';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
 
         <HelloWorld />
       </header>
+      <body>
+        <CountBoard />
+      </body>
     </div>
   );
 }
