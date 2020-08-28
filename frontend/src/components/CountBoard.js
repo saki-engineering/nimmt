@@ -11,23 +11,31 @@ function Button(props) {
     );
 }
 
-function ButtonList(props) {
-    var start = Number(props.start);
-    var end = Number(props.end)
+class ButtonList extends React.Component {
+    renderButton(i) {
+        return(
+            <Button
+                value={i}
+                onClick={function() { alert('click'); }}
+            />
+        );
+    }
 
-    const numberList = Array(end-start+1).fill(0).map((_,i) => i+start);
-    const ButtonListItems = numberList.map((value) => 
-        <Button
-            value={value}
-            onClick={function() { alert('click'); }}
-        />
-    );
+    render() {
+        var start = Number(this.props.start);
+        var end = Number(this.props.end);
 
-    return (
-        <div className="board-row">
-            {ButtonListItems}
-        </div>
-    )
+        const numberList = Array(end-start+1).fill(0).map((_,i) => i+start);
+        const ButtonListItems = numberList.map((value) => 
+            this.renderButton(value)
+        )
+
+        return (
+            <div className="board-row">
+                {ButtonListItems}
+            </div>
+        )
+    }
 }
 
 function ButtonTable(props) {
@@ -55,7 +63,13 @@ function ButtonTable(props) {
 
 class CountBoard extends React.Component {
     renderButtonTable() {
-        return <ButtonTable N="104" column="10"/>
+        return (
+            <ButtonTable 
+                N="104"
+                column="10"
+                onClick={() => this.props.handleClick()}
+            />
+        )
     }
 
     render() {
