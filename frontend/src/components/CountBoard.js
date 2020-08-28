@@ -54,10 +54,16 @@ function ButtonTable(props) {
 }
 
 class CountBoard extends React.Component {
+    renderButtonTable() {
+        return <ButtonTable N="104" column="10"/>
+    }
+
     render() {
         return (
-            <ButtonTable N="104" column="10"/>
-        );
+            <div>
+                {this.renderButtonTable()}
+            </div>
+        )
     }
 }
 
