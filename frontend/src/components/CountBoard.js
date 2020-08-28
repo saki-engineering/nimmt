@@ -5,7 +5,7 @@ import React from 'react';
 function Button(props) {
     return (
         // propは、<Button/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <button className="button" onClick={props.onClick}>
+        <button className="button" onClick={props.onClick} style={props.style}>
             {props.value}
         </button>
     );
@@ -13,10 +13,15 @@ function Button(props) {
 
 class ButtonList extends React.Component {
     renderButton(i) {
+        var color = this.props.colors[i] ? "red" : "white";
+        var style = {
+            "background-color": color
+        };
         return(
             <Button
                 value={i}
                 onClick={() => {this.props.onClick(i);}}
+                style={style}
             />
         );
     }
@@ -45,6 +50,7 @@ class ButtonTable extends React.Component {
                 start={start}
                 end={end}
                 onClick={(i) => {this.props.onClick(i);}}
+                colors={this.props.colors}
             />
         );
     }
@@ -90,6 +96,7 @@ class CountBoard extends React.Component {
                 N="104"
                 column="10"
                 onClick={(i) => this.handleClick(i)}
+                colors={this.state.isPlayed}
             />
         )
     }
