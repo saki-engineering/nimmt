@@ -16,7 +16,7 @@ class ButtonList extends React.Component {
         return(
             <Button
                 value={i}
-                onClick={function() { alert('click'); }}
+                onClick={() => {this.props.onClick(i);}}
             />
         );
     }
@@ -44,6 +44,7 @@ class ButtonTable extends React.Component {
             <ButtonList
                 start={start}
                 end={end}
+                onClick={() => {this.props.onClick();}}
             />
         );
     }
@@ -70,11 +71,25 @@ class ButtonTable extends React.Component {
 }
 
 class CountBoard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isPlayed: Array(105).fill(false),
+        };
+    }
+
+    handleClick(i) {
+        const isPlayed = this.state.isPlayed.slice();
+        isPlayed[i] = !this.state.isPlayed[i];
+        this.setState({isPlayed: isPlayed});
+    }
+
     renderButtonTable() {
         return (
             <ButtonTable 
                 N="104"
                 column="10"
+                onClick={() => this.handleClick()}
             />
         )
     }
