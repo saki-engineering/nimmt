@@ -38,27 +38,35 @@ class ButtonList extends React.Component {
     }
 }
 
-function ButtonTable(props) {
-    var N = Number(props.N);
-    var column = Number(props.column);
-
-    var List = [];
-    for(var i = 1; i <= N; i += column) {
-        List.push({start: i, end: Math.min(i+column-1, N)})
+class ButtonTable extends React.Component {
+    renderButtonList(start, end) {
+        return (
+            <ButtonList
+                start={start}
+                end={end}
+            />
+        );
     }
 
-    const ButtonTableItems = List.map((value) => 
-        <ButtonList
-          start={value.start}
-          end={value.end}
-        />
-    );
+    render() {
+        var N = Number(this.props.N);
+        var column = Number(this.props.column);
 
-    return (
-        <div>
-            {ButtonTableItems}
-        </div>
-    )
+        var List = [];
+        for(var i = 1; i <= N; i += column) {
+            List.push({start: i, end: Math.min(i+column-1, N)})
+        }
+
+        const ButtonTableItems = List.map((value) => 
+            this.renderButtonList(value.start, value.end)
+        );
+
+        return (
+            <div className="button-table">
+                {ButtonTableItems}
+            </div>
+        )
+    }
 }
 
 class CountBoard extends React.Component {
@@ -67,7 +75,6 @@ class CountBoard extends React.Component {
             <ButtonTable 
                 N="104"
                 column="10"
-                onClick={() => this.props.handleClick()}
             />
         )
     }
