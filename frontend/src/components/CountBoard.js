@@ -79,22 +79,9 @@ class CountBoard extends React.Component {
     }
 
     handleClick(i) {
-        console.log(i) // これもundefinedになる
-        /*
-        var NewisPlayed = this.state.isPlayed.slice(); // ここの問題ではない
-        console.log(NewisPlayed, "old") //ここの問題でもない
-        //console.log(Array.isArray(NewisPlayed)) // NewisPlayedは確かにarray型
-        console.log(NewisPlayed[i], "oldelement") // ここでundefinedになる
-        /*
-        console.log(!this.state.isPlayed[i], "newelement")
+        var NewisPlayed = this.state.isPlayed.slice();
         NewisPlayed[i] = !this.state.isPlayed[i];
-        */
-        /*
-        NewisPlayed[i] = true // これが効いてない
-        console.log(NewisPlayed, "new")
-        this.setState({isPlayed: NewisPlayed}) // これは効いてる
-        console.log(this.state.isPlayed);
-        */
+        this.setState({isPlayed: NewisPlayed})
     }
 
     renderButtonTable() {
