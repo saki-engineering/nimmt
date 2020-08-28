@@ -44,7 +44,7 @@ class ButtonTable extends React.Component {
             <ButtonList
                 start={start}
                 end={end}
-                onClick={() => {this.props.onClick();}}
+                onClick={(i) => {this.props.onClick(i);}}
             />
         );
     }
@@ -79,9 +79,22 @@ class CountBoard extends React.Component {
     }
 
     handleClick(i) {
-        const isPlayed = this.state.isPlayed.slice();
-        isPlayed[i] = !this.state.isPlayed[i];
-        this.setState({isPlayed: isPlayed});
+        console.log(i) // これもundefinedになる
+        /*
+        var NewisPlayed = this.state.isPlayed.slice(); // ここの問題ではない
+        console.log(NewisPlayed, "old") //ここの問題でもない
+        //console.log(Array.isArray(NewisPlayed)) // NewisPlayedは確かにarray型
+        console.log(NewisPlayed[i], "oldelement") // ここでundefinedになる
+        /*
+        console.log(!this.state.isPlayed[i], "newelement")
+        NewisPlayed[i] = !this.state.isPlayed[i];
+        */
+        /*
+        NewisPlayed[i] = true // これが効いてない
+        console.log(NewisPlayed, "new")
+        this.setState({isPlayed: NewisPlayed}) // これは効いてる
+        console.log(this.state.isPlayed);
+        */
     }
 
     renderButtonTable() {
@@ -89,7 +102,7 @@ class CountBoard extends React.Component {
             <ButtonTable 
                 N="104"
                 column="10"
-                onClick={() => this.handleClick()}
+                onClick={(i) => this.handleClick(i)}
             />
         )
     }
