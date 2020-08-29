@@ -3,6 +3,7 @@ import logo from './logo.png';
 import './App.css';
 import HelloWorld from './components/HelloWorld';
 import CountBoard from './components/CountBoard';
+import DropBox from './components/DropBox';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       </header>
       <body>
         <CountBoard />
+        <DropBox />
       </body>
     </div>
   );
