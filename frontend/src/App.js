@@ -18,7 +18,6 @@ function App() {
       </header>
       <body>
         <CountBoard />
-        <DropBox />
       </body>
     </div>
   );

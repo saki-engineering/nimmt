@@ -1,4 +1,5 @@
 import React from 'react';
+import DropBox from './DropBox';
 
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
@@ -101,10 +102,15 @@ class CountBoard extends React.Component {
         )
     }
 
+    renderDropBox() {
+        return <DropBox/>
+    }
+
     render() {
         return (
             <div>
                 {this.renderButtonTable()}
+                {this.renderDropBox()}
             </div>
         )
     }
