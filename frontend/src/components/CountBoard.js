@@ -103,7 +103,11 @@ class CountBoard extends React.Component {
     }
 
     renderDropBox() {
-        return <DropBox/>
+        return (
+            <DropBox
+                func={(i) => this.handleClick(i)}
+            />
+        );
     }
 
     render() {
