@@ -11,9 +11,17 @@ class DropBox extends React.Component {
     }
 
     handleOnDrop = (acceptFiles) => {
+        var reader = new FileReader();
+
         var fileList = this.state.files.slice();
         acceptFiles.forEach(file => {
             fileList.push(file);
+
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                var dataUrl = reader.result;
+                window.wails.Events.Emit("getImage", dataUrl);
+            };
         });
         this.setState({files: fileList});
 
