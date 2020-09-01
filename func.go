@@ -131,6 +131,10 @@ func createCardList(filename string) {
 
 	cardDest := image.NewGray16(cardBounds)
 
+	if _, err := os.Stat(cardInHandDir); os.IsNotExist(err) {
+		os.Mkdir(cardInHandDir, 0777)
+	}
+
 	cnt := 1
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
