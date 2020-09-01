@@ -1,10 +1,7 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
-	"os"
-	"strings"
 
 	"github.com/leaanthony/mewn"
 	"github.com/wailsapp/wails"
@@ -25,19 +22,7 @@ func (s *MyStruct) WailsInit(runtime *wails.Runtime) error {
 	runtime.Events.On("getImage", func(data ...interface{}) {
 		fmt.Println("received getImage event")
 
-		receivedData := ""
-		for _, d := range data {
-			if dd, ok := d.(string); ok {
-				receivedData += string(dd)
-			}
-		}
-		receivedDataArray := strings.Split(receivedData, ",")
-
-		decoded, _ := base64.StdEncoding.DecodeString(receivedDataArray[1])
-		file, _ := os.Create("encode_and_decord.png")
-		defer file.Close()
-
-		file.Write(decoded)
+		createScreenShotPNG(&data)
 	})
 	return nil
 }
