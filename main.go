@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 
 	"github.com/leaanthony/mewn"
 	"github.com/wailsapp/wails"
@@ -20,9 +22,28 @@ func (s *MyStruct) WailsInit(runtime *wails.Runtime) error {
 	fmt.Println("WailsInit is carried out.")
 
 	runtime.Events.On("getImage", func(data ...interface{}) {
-		fmt.Println("received getImage event")
-
 		createScreenShotPNG(&data)
+
+		createCardList(screenshotFilename)
+
+		// Nはカードの枚数
+		cardFilesInHand, _ := ioutil.ReadDir(cardInHandDir)
+		N := len(cardFilesInHand)
+		cardNumberList := make([]int, N)
+
+		// ここから文字認識
+		for i, cardfile := range cardFilesInHand {
+			cardInHandFilename := cardInHandDir + "/" + cardfile.Name()
+			cardInHandImage, _ := createImage(cardInHandFilename)
+			cardInHandDest := getGrayScale(&cardInHandImage)
+
+			cardNumberList[i] = getFileNumber(kNN(cardInHandDest))
+
+			// 使ったresultファイルは削除
+			os.Remove(cardInHandFilename)
+		}
+
+		fmt.Println(cardNumberList)
 	})
 	return nil
 }
