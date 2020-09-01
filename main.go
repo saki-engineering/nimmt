@@ -45,7 +45,8 @@ func (s *MyStruct) WailsInit(runtime *wails.Runtime) error {
 
 		os.Remove(screenshotFilename)
 
-		fmt.Println(cardNumberList)
+		runtime.Events.Emit("analyzed", cardNumberList)
+		//fmt.Println(cardNumberList)
 	})
 	return nil
 }
