@@ -43,6 +43,8 @@ func (s *MyStruct) WailsInit(runtime *wails.Runtime) error {
 			os.Remove(cardInHandFilename)
 		}
 
+		os.Remove(screenshotFilename)
+
 		fmt.Println(cardNumberList)
 	})
 	return nil
