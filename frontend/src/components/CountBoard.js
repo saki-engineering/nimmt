@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DropBox from './DropBox';
 
 // 関数コンポーネント
@@ -73,47 +73,40 @@ function ButtonTable(props) {
     )
 }
 
-class CountBoard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isPlayed: Array(105).fill(false),
-        };
+function CountBoard(props) {
+    const [isPlayed, setIsPlayed] = useState(Array(105).fill(false))
+
+    function handleClick(i) {
+        var NewisPlayed = isPlayed.slice();
+        NewisPlayed[i] = !isPlayed[i];
+        setIsPlayed(NewisPlayed)
     }
 
-    handleClick(i) {
-        var NewisPlayed = this.state.isPlayed.slice();
-        NewisPlayed[i] = !this.state.isPlayed[i];
-        this.setState({isPlayed: NewisPlayed})
-    }
-
-    renderButtonTable() {
+    function renderButtonTable() {
         return (
             <ButtonTable 
                 N="104"
                 column="10"
-                onClick={(i) => this.handleClick(i)}
-                colors={this.state.isPlayed}
+                onClick={(i) => handleClick(i)}
+                colors={isPlayed}
             />
         )
     }
 
-    renderDropBox() {
+    function renderDropBox() {
         return (
             <DropBox
-                func={(i) => this.handleClick(i)}
+                func={(i) => handleClick(i)}
             />
         );
     }
 
-    render() {
-        return (
-            <div>
-                {this.renderButtonTable()}
-                {this.renderDropBox()}
-            </div>
-        )
-    }
+    return (
+        <div>
+            {renderButtonTable()}
+            {renderDropBox()}
+        </div>
+    )
 }
 
 export default CountBoard;
