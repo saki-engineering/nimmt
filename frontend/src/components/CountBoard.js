@@ -12,36 +12,34 @@ function Button(props) {
     );
 }
 
-class ButtonList extends React.Component {
-    renderButton(i) {
-        var color = this.props.colors[i] ? "red" : "white";
+function ButtonList(props) {
+    function renderButton(i) {
+        var color = props.colors[i] ? "red" : "white";
         var style = {
             "background-color": color
         };
         return(
             <Button
                 value={i}
-                onClick={() => {this.props.onClick(i);}}
+                onClick={() => {props.onClick(i);}}
                 style={style}
             />
         );
     }
 
-    render() {
-        var start = Number(this.props.start);
-        var end = Number(this.props.end);
+    var start = Number(props.start);
+    var end = Number(props.end);
 
-        const numberList = Array(end-start+1).fill(0).map((_,i) => i+start);
-        const ButtonListItems = numberList.map((value) => 
-            this.renderButton(value)
-        )
+    const numberList = Array(end-start+1).fill(0).map((_,i) => i+start);
+    const ButtonListItems = numberList.map((value) => 
+        renderButton(value)
+    )
 
-        return (
-            <div className="board-row">
-                {ButtonListItems}
-            </div>
-        )
-    }
+    return (
+        <div className="board-row">
+            {ButtonListItems}
+        </div>
+    )
 }
 
 class ButtonTable extends React.Component {
