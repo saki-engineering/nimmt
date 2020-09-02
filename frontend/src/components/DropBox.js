@@ -24,9 +24,6 @@ class DropBox extends React.Component {
             };
         });
         this.setState({files: fileList});
-
-        //仮に、1のボタンのon/offが変わるようにしておいた
-        this.props.func(1);
     }
 
     render() {

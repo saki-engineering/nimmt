@@ -82,6 +82,19 @@ function CountBoard(props) {
         setIsPlayed(NewisPlayed)
     }
 
+    window.wails.Events.On("analyzed", cardList => {
+        var NewisPlayed = isPlayed.slice();
+        cardList.forEach(n => {
+            console.log(n)
+            console.log(typeof(n))
+            NewisPlayed[n] = true
+        });
+
+        setTimeout(() => {
+            setIsPlayed(NewisPlayed)
+          }, 1000);
+    })
+
     function renderButtonTable() {
         return (
             <ButtonTable 
