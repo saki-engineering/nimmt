@@ -5,24 +5,26 @@ import { AppContext } from '../contexts/appContexts';
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
 function Button(props) {
+    const {toggleButton} = useContext(AppContext)
     return (
         // propは、<Button/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <button className="button" onClick={props.onClick} style={props.style}>
+        <button className="button" onClick={() => toggleButton(props.value)} style={props.style}>
             {props.value}
         </button>
     );
 }
 
 function ButtonList(props) {
+    const { isPlayed } = useContext(AppContext)
+    
     function renderButton(i) {
-        var color = props.colors[i] ? "red" : "white";
+        var color = isPlayed[i] ? "red" : "white";
         var style = {
             "background-color": color
         };
         return(
             <Button
                 value={i}
-                onClick={() => {props.onClick(i);}}
                 style={style}
             />
         );
@@ -49,8 +51,6 @@ function ButtonTable(props) {
             <ButtonList
                 start={start}
                 end={end}
-                onClick={(i) => {props.onClick(i);}}
-                colors={props.colors}
             />
         );
     }
@@ -75,12 +75,7 @@ function ButtonTable(props) {
 }
 
 function CountBoard(props) {
-    const {isPlayed, toggleButton, multiOnButton} = useContext(AppContext)
-    //const [isPlayed, setIsPlayed] = useState(Array(105).fill(false))
-
-    function handleClick(i) {
-        toggleButton(i)
-    }
+    const { multiOnButton } = useContext(AppContext)
 
     window.wails.Events.On("analyzed", cardList => {
         multiOnButton(cardList)
@@ -91,8 +86,6 @@ function CountBoard(props) {
             <ButtonTable 
                 N="104"
                 column="10"
-                onClick={(i) => handleClick(i)}
-                colors={isPlayed}
             />
         )
     }
