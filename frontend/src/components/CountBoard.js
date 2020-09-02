@@ -108,9 +108,7 @@ function CountBoard(props) {
 
     function renderDropBox() {
         return (
-            <DropBox
-                func={(i) => handleClick(i)}
-            />
+            <DropBox/>
         );
     }
 
