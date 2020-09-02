@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import DropBox from './DropBox';
+import { AppContext } from '../contexts/appContexts';
 
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
@@ -74,25 +75,15 @@ function ButtonTable(props) {
 }
 
 function CountBoard(props) {
-    const [isPlayed, setIsPlayed] = useState(Array(105).fill(false))
+    const {isPlayed, toggleButton, multiOnButton} = useContext(AppContext)
+    //const [isPlayed, setIsPlayed] = useState(Array(105).fill(false))
 
     function handleClick(i) {
-        var NewisPlayed = isPlayed.slice();
-        NewisPlayed[i] = !isPlayed[i];
-        setIsPlayed(NewisPlayed)
+        toggleButton(i)
     }
 
     window.wails.Events.On("analyzed", cardList => {
-        var NewisPlayed = isPlayed.slice();
-        cardList.forEach(n => {
-            console.log(n)
-            console.log(typeof(n))
-            NewisPlayed[n] = true
-        });
-
-        setTimeout(() => {
-            setIsPlayed(NewisPlayed)
-          }, 1000);
+        multiOnButton(cardList)
     })
 
     function renderButtonTable() {
