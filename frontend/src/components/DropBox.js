@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {useDropzone} from 'react-dropzone';
+import { AppContext } from '../contexts/appContexts';
 
 
 function DropBox () {
+    const { multiOnButton } = useContext(AppContext)
+
     const handleOnDrop = (acceptFiles) => {
         var reader = new FileReader();
 
@@ -10,14 +13,9 @@ function DropBox () {
             reader.readAsDataURL(file);
             reader.onload = function() {
                 var dataUrl = reader.result;
-                window.wails.Events.Emit("getImage", dataUrl);
-                /*
                 window.backend.OCR(dataUrl).then(result => {
-                    console.log(result);
-                    console.log(typeof(result))
-                    console.log(typeof(result[0]))
+                    multiOnButton(result)
                 });
-                */
             };
         });
     }

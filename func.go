@@ -20,14 +20,16 @@ var (
 	screenshotFilename = "screenshot.png"
 )
 
-func createScreenShotPNG(data *[]interface{}) {
-	receivedData := ""
-	for _, d := range *data {
-		if dd, ok := d.(string); ok {
-			receivedData += string(dd)
+func createScreenShotPNG(data string) {
+	/*
+		receivedData := ""
+		for _, d := range *data {
+			if dd, ok := d.(string); ok {
+				receivedData += string(dd)
+			}
 		}
-	}
-	receivedDataArray := strings.Split(receivedData, ",")
+	*/
+	receivedDataArray := strings.Split(data, ",")
 
 	decoded, _ := base64.StdEncoding.DecodeString(receivedDataArray[1])
 	file, _ := os.Create(screenshotFilename)

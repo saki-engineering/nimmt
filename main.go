@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -9,46 +8,31 @@ import (
 	"github.com/wailsapp/wails"
 )
 
-func basic() string {
-	return "World!"
-}
+func OCR(data string) []int {
+	createScreenShotPNG(data)
 
-type MyStruct struct {
-	runtime *wails.Runtime
-}
+	createCardList(screenshotFilename)
 
-func (s *MyStruct) WailsInit(runtime *wails.Runtime) error {
-	s.runtime = runtime
-	fmt.Println("WailsInit is carried out.")
+	// Nはカードの枚数
+	cardFilesInHand, _ := ioutil.ReadDir(cardInHandDir)
+	N := len(cardFilesInHand)
+	cardNumberList := make([]int, N)
 
-	runtime.Events.On("getImage", func(data ...interface{}) {
-		createScreenShotPNG(&data)
+	// ここから文字認識
+	for i, cardfile := range cardFilesInHand {
+		cardInHandFilename := cardInHandDir + "/" + cardfile.Name()
+		cardInHandImage, _ := createImage(cardInHandFilename)
+		cardInHandDest := getGrayScale(&cardInHandImage)
 
-		createCardList(screenshotFilename)
+		cardNumberList[i] = getFileNumber(kNN(cardInHandDest))
 
-		// Nはカードの枚数
-		cardFilesInHand, _ := ioutil.ReadDir(cardInHandDir)
-		N := len(cardFilesInHand)
-		cardNumberList := make([]int, N)
+		// 使ったresultファイルは削除
+		os.Remove(cardInHandFilename)
+	}
 
-		// ここから文字認識
-		for i, cardfile := range cardFilesInHand {
-			cardInHandFilename := cardInHandDir + "/" + cardfile.Name()
-			cardInHandImage, _ := createImage(cardInHandFilename)
-			cardInHandDest := getGrayScale(&cardInHandImage)
+	os.Remove(screenshotFilename)
 
-			cardNumberList[i] = getFileNumber(kNN(cardInHandDest))
-
-			// 使ったresultファイルは削除
-			os.Remove(cardInHandFilename)
-		}
-
-		os.Remove(screenshotFilename)
-
-		runtime.Events.Emit("analyzed", cardNumberList)
-		//fmt.Println(cardNumberList)
-	})
-	return nil
+	return cardNumberList
 }
 
 func main() {
@@ -65,8 +49,6 @@ func main() {
 		Colour: "#131313",
 	})
 
-	item := &MyStruct{}
-	app.Bind(basic)
-	app.Bind(item)
+	app.Bind(OCR)
 	app.Run()
 }
