@@ -4,7 +4,7 @@ import { AppContext } from '../contexts/appContexts';
 
 
 function DropBox () {
-    const { multiOnButton } = useContext(AppContext)
+    const { state, dispatch } = useContext(AppContext)
 
     const handleOnDrop = (acceptFiles) => {
         var reader = new FileReader();
@@ -14,7 +14,13 @@ function DropBox () {
             reader.onload = function() {
                 var dataUrl = reader.result;
                 window.backend.OCR(dataUrl).then(result => {
-                    multiOnButton(result)
+                    const action = {
+                        type: "multiOn",
+                        data: {
+                            array: result
+                        }
+                    };
+                    dispatch(action);
                 });
             };
         });

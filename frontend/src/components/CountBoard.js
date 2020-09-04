@@ -5,20 +5,27 @@ import { AppContext } from '../contexts/appContexts';
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
 function Button(props) {
-    const {toggleButton} = useContext(AppContext)
+    const {dispatch} = useContext(AppContext)
+    const action = {
+        type: "toggle",
+        data: {
+            index: props.value
+        }
+    };
+
     return (
         // propは、<Button/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <button className="button" onClick={() => toggleButton(props.value)} style={props.style}>
+        <button className="button" onClick={() => dispatch(action)} style={props.style}>
             {props.value}
         </button>
     );
 }
 
 function ButtonList(props) {
-    const { isPlayed } = useContext(AppContext)
+    const { state } = useContext(AppContext)
     
     function renderButton(i) {
-        var color = isPlayed[i] ? "red" : "white";
+        var color = state.isPlayed[i] ? "red" : "white";
         var style = {
             "background-color": color
         };
@@ -75,11 +82,13 @@ function ButtonTable(props) {
 }
 
 function CountBoard(props) {
+    /*
     const { multiOnButton } = useContext(AppContext)
 
     window.wails.Events.On("analyzed", cardList => {
         multiOnButton(cardList)
     })
+    */
 
     function renderButtonTable() {
         return (
