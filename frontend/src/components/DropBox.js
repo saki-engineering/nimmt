@@ -1,58 +1,50 @@
 import React from 'react';
-import Dropzone from 'react-dropzone';
+import {useDropzone} from 'react-dropzone';
 
 
-class DropBox extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          files: []
-        };
-    }
-
-    handleOnDrop = (acceptFiles) => {
+function DropBox () {
+    const handleOnDrop = (acceptFiles) => {
         var reader = new FileReader();
 
-        var fileList = this.state.files.slice();
         acceptFiles.forEach(file => {
-            fileList.push(file);
-
             reader.readAsDataURL(file);
             reader.onload = function() {
                 var dataUrl = reader.result;
                 window.wails.Events.Emit("getImage", dataUrl);
+                /*
+                window.backend.OCR(dataUrl).then(result => {
+                    console.log(result);
+                    console.log(typeof(result))
+                    console.log(typeof(result[0]))
+                });
+                */
             };
         });
-        this.setState({files: fileList});
     }
 
-    render() {
-        const files = this.state.files.map(file => (
-            <li key={file.name}>
-              {file.name} - {file.size} bytes
-            </li>
-        ));
+    const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+        accept: "image/jpeg,image/png,image/jpg",
+        onDrop: handleOnDrop
+    });
+  
+    const files = acceptedFiles.map(file => (
+        <li key={file.path}>
+        {file.path} - {file.size} bytes
+        </li>
+    ));
 
-        return( 
-            <Dropzone 
-                onDrop={this.handleOnDrop}
-                accept="image/jpeg,image/png,image/jpg"
-            >
-                {({getRootProps, getInputProps}) => (
-                    <section className="container">
-                        <div {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <p>Drag 'n' drop some files here, or click to select files</p>
-                        </div>
-                        <aside>
-                            <h4>Files</h4>
-                            <ul>{files}</ul>
-                        </aside>
-                    </section>
-                )}
-            </Dropzone>
-        );
-    }
+    return (
+        <section className="container">
+            <div {...getRootProps({className: 'dropzone'})}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+            <aside>
+                <h4>Files</h4>
+                <ul>{files}</ul>
+            </aside>
+        </section>
+    );
 }
 
 export default DropBox;
