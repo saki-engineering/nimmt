@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react';
 import logo from './logo.png';
 import './App.css';
-import { AppContext, AppReducer } from './contexts/appContexts';
+import { AppContext } from './contexts/appContexts';
+import { AppReducer } from './reducers/AppReducer';
 import HelloWorld from './components/HelloWorld';
 import CountBoard from './components/CountBoard';
 
