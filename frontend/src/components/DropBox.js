@@ -4,7 +4,7 @@ import { AppContext } from '../contexts/appContexts';
 
 
 function DropBox () {
-    const { state, dispatch } = useContext(AppContext)
+    const { dispatch } = useContext(AppContext)
 
     const handleOnDrop = (acceptFiles) => {
         var reader = new FileReader();
