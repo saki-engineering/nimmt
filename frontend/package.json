@@ -5,8 +5,10 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@wailsapp/runtime": "^1.0.10",
     "core-js": "^3.6.4",
+    "material-ui-dropzone": "^3.4.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-dropzone": "^11.0.3",
