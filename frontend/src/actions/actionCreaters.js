@@ -21,3 +21,10 @@ export function multiOnButton(dispatch, dataUrl) {
         dispatch(action);
     });
 }
+
+export function resetButtonTable(dispatch) {
+    const action = {
+        type: "reset",
+    };
+    dispatch(action);
+}

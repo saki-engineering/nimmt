@@ -12,6 +12,9 @@ export function AppReducer(state, action) {
                 NewisPlayed[n] = true
             });
             return {isPlayed: NewisPlayed}
+        case 'reset':
+            var filledfalse = Array(105).fill(false);
+            return {isPlayed: filledfalse}
         default:
             return state;
     }
