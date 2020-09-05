@@ -31,6 +31,7 @@ function DropBox () {
     return (
         <DropzoneAreaBase
             acceptedFiles={['image/png']}
+            maxFileSize="4000000"
             dropzoneText={"Drag and drop an image here or click"}
             onDrop={(files) => handleOnDrop(files)}
             onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
