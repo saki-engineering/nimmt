@@ -2,32 +2,39 @@ import React, { useContext } from 'react';
 import DropBox from './DropBox';
 import { AppContext } from '../contexts/appContexts';
 import { toggleButton } from '../actions/actionCreaters';
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        margin: theme.spacing(0.5),
+    },
+}));
 
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
-function Button(props) {
-    const {dispatch} = useContext(AppContext)
+function MyButton(props) {
+    const {dispatch} = useContext(AppContext);
+    const classes = useStyles();
 
     return (
-        // propは、<Button/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <button className="button" onClick={() => toggleButton(dispatch, props.value)} style={props.style}>
+        // propは、<MyButton/>で呼び出すときに属性(prop)として指定するのを参照するということ
+        <Button className={classes.root} onClick={() => toggleButton(dispatch, props.value)} variant="contained" color={props.color} size="large">
             {props.value}
-        </button>
+        </Button>
     );
 }
 
 function ButtonList(props) {
-    const { state } = useContext(AppContext)
+    const { state } = useContext(AppContext);
+    const classes = useStyles();
     
     function renderButton(i) {
-        var color = state.isPlayed[i] ? "red" : "white";
-        var style = {
-            "background-color": color
-        };
+        var color = state.isPlayed[i] ? "primary" : "default";
         return(
-            <Button
+            <MyButton
                 value={i}
-                style={style}
+                color={color}
             />
         );
     }
@@ -41,7 +48,7 @@ function ButtonList(props) {
     )
 
     return (
-        <div className="board-row">
+        <div className={classes.root}>
             {ButtonListItems}
         </div>
     )
