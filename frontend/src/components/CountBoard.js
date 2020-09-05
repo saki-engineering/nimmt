@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import DropBox from './DropBox';
 import { AppContext } from '../contexts/appContexts';
 import { toggleButton } from '../actions/actionCreaters';
 import { Button } from '@material-ui/core';
@@ -19,7 +18,7 @@ function MyButton(props) {
 
     return (
         // propは、<MyButton/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <Button className={classes.root} onClick={() => toggleButton(dispatch, props.value)} variant="contained" color={props.color} size="large">
+        <Button className={classes.root} onClick={() => toggleButton(dispatch, props.value)} variant="contained" color={props.color} size="medium">
             {props.value}
         </Button>
     );
@@ -84,26 +83,11 @@ function ButtonTable(props) {
 }
 
 function CountBoard(props) {
-    function renderButtonTable() {
-        return (
-            <ButtonTable 
+    return (
+        <ButtonTable 
                 N="104"
                 column="10"
-            />
-        )
-    }
-
-    function renderDropBox() {
-        return (
-            <DropBox/>
-        );
-    }
-
-    return (
-        <div>
-            {renderButtonTable()}
-            {renderDropBox()}
-        </div>
+        />
     )
 }
 

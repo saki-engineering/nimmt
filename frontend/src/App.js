@@ -3,8 +3,20 @@ import './App.css';
 import { AppContext } from './contexts/appContexts';
 import { AppReducer } from './reducers/AppReducer';
 import CountBoard from './components/CountBoard';
+import DropBox from './components/DropBox';
+import { Grid, Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingTop: '5%',
+    paddingBottom: '5%',
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+
   const initialState = {
     isPlayed : Array(105).fill(false)
   };
@@ -15,7 +27,16 @@ function App() {
     <div id="app" className="App">
       <AppContext.Provider value={{state, dispatch}}>
         <body>
-          <CountBoard />
+        <Container fixed className={classes.root}>
+          <Grid container>
+            <Grid item xs={8}>
+              <CountBoard />
+            </Grid>
+            <Grid item xs={4}>
+              <DropBox />
+            </Grid>
+          </Grid>
+        </Container>
         </body>
       </AppContext.Provider>
     </div>
