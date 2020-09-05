@@ -41,12 +41,13 @@ func main() {
 	css := mewn.String("./frontend/build/static/css/main.css")
 
 	app := wails.CreateApp(&wails.AppConfig{
-		Width:  1024,
-		Height: 768,
-		Title:  "nimmt",
-		JS:     js,
-		CSS:    css,
-		Colour: "#131313",
+		Width:     1400,
+		Height:    768,
+		Title:     "nimmt",
+		JS:        js,
+		CSS:       css,
+		Resizable: true,
+		Colour:    "#131313",
 	})
 
 	app.Bind(OCR)
