@@ -7,7 +7,6 @@ export function AppReducer(state, action) {
             NewisPlayed[i] = !state.isPlayed[i];
             return {isPlayed: NewisPlayed}
         case 'multiOn':
-            console.log("nunu");
             var array = action.data.array;
             array.forEach(n => {
                 NewisPlayed[n] = true
