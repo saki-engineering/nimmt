@@ -77,14 +77,6 @@ function ButtonTable(props) {
 }
 
 function CountBoard(props) {
-    /*
-    const { multiOnButton } = useContext(AppContext)
-
-    window.wails.Events.On("analyzed", cardList => {
-        multiOnButton(cardList)
-    })
-    */
-
     function renderButtonTable() {
         return (
             <ButtonTable 
