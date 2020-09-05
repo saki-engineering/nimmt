@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #fad487;
+  background-image: url("./az-subtle.png");
 }
 
 .App-link {
