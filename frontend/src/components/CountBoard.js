@@ -1,21 +1,16 @@
 import React, { useContext } from 'react';
 import DropBox from './DropBox';
 import { AppContext } from '../contexts/appContexts';
+import { toggleButton } from '../actions/actionCreaters';
 
 // 関数コンポーネント
 // renderだけでstateを持たないコンポーネントならこれを使えば簡単にかける
 function Button(props) {
     const {dispatch} = useContext(AppContext)
-    const action = {
-        type: "toggle",
-        data: {
-            index: props.value
-        }
-    };
 
     return (
         // propは、<Button/>で呼び出すときに属性(prop)として指定するのを参照するということ
-        <button className="button" onClick={() => dispatch(action)} style={props.style}>
+        <button className="button" onClick={() => toggleButton(dispatch, props.value)} style={props.style}>
             {props.value}
         </button>
     );

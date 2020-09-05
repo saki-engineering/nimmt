@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import {useDropzone} from 'react-dropzone';
 import { AppContext } from '../contexts/appContexts';
+import { multiOnButton } from '../actions/actionCreaters';
 
 
 function DropBox () {
@@ -14,13 +15,7 @@ function DropBox () {
             reader.onload = function() {
                 var dataUrl = reader.result;
                 window.backend.OCR(dataUrl).then(result => {
-                    const action = {
-                        type: "multiOn",
-                        data: {
-                            array: result
-                        }
-                    };
-                    dispatch(action);
+                    multiOnButton(dispatch, result);
                 });
             };
         });
