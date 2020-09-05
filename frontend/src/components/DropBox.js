@@ -14,9 +14,7 @@ function DropBox () {
             reader.readAsDataURL(file);
             reader.onload = function() {
                 var dataUrl = reader.result;
-                window.backend.OCR(dataUrl).then(result => {
-                    multiOnButton(dispatch, result);
-                });
+                multiOnButton(dispatch, dataUrl);
             };
         });
     }

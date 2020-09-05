@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 export function toggleButton(dispatch, i) {
     const action = {
@@ -10,12 +10,14 @@ export function toggleButton(dispatch, i) {
     dispatch(action);
 }
 
-export function multiOnButton(dispatch, result) {
-    const action = {
-        type: "multiOn",
-        data: {
-            array: result
-        }
-    };
-    dispatch(action);
+export function multiOnButton(dispatch, dataUrl) {
+    window.backend.OCR(dataUrl).then(result => {
+        const action = {
+            type: "multiOn",
+            data: {
+                array: result
+            }
+        };
+        dispatch(action);
+    });
 }
